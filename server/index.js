@@ -7,6 +7,13 @@ const {register, login, logout} = require('./controllers/auth.js')
 const {getAllPosts, getCurrentUserPosts, addPost, editPost, deletePost} = require('./controllers/posts.js')
 const {isAuthenticated} = require('./middleware/isAuthenticated.js')
 
+const {sequelize} = require('./util/database')
+const {User} = require('./models/user')
+const {Post} = require('./models/post')
+
+User.hasMany(Post)
+Post.belongsTo(User)
+
 app.use(express.static(`${__dirname}/server`))
 
 app.use(express.json())
@@ -28,4 +35,8 @@ app.put('/posts/:id', isAuthenticated, editPost)
 app.delete('/posts/:id', isAuthenticated, deletePost)
 
 
-app.listen(PORT, () => console.log(`up on ${PORT}`))
+sequelize.sync()
+.then(() => {
+    app.listen(PORT, () => console.log(`db sync successful & server running on port ${PORT}`))
+})
+.catch(err => console.log(err))
