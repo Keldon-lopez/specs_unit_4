@@ -23,6 +23,7 @@ const Auth = () => {
     .catch(err => {
         setUsername('')
         setPassword('')
+        alert(err.response.data)
     });
     console.log("submitHandler called");
   };
