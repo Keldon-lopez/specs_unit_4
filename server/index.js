@@ -22,14 +22,13 @@ app.use(cors())
 // Auth
 app.post('/register', register)
 app.post('/login', login)
-app.post('/logout', logout)
 
 //Get all Posts
 app.get('/posts', getAllPosts)
 
 
 //AUTH Post usage
-app.get('/userPosts/:userId', isAuthenticated, getCurrentUserPosts)
+app.get('/userPosts/:userId', getCurrentUserPosts)
 app.post('/posts', isAuthenticated, addPost)
 app.put('/posts/:id', isAuthenticated, editPost)
 app.delete('/posts/:id', isAuthenticated, deletePost)
