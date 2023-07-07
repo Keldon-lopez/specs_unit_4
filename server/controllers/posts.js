@@ -47,10 +47,29 @@ module.exports = {
             res.status(400).send('cannot add post')
         }
     }, 
-    editPost: (req, res) =>{
-        console.log('editPost')
+    editPost: async (req, res) =>{
+        try {
+            const {id} = req.params
+            const {status} = req.body
+            await Post.update({privateStatus: status}, {
+                where: {id: +id}
+            })
+            res.sendStatus(200)
+        } catch (error) {
+            console.log('error in editPost')
+            console.log(error)
+            res.sendStatus(400)
+        }
     }, 
-    deletePost: (req, res) =>{
-        console.log('deletePost')
+    deletePost: async (req, res) =>{
+        try {
+            const {id} = req.params
+            await Post.destroy({where: {id: +id}})
+            res.sendStatus(200)
+        } catch (error) {
+            console.log('error in deletePost')
+            console.log(error)
+            res.sendStatus(400)
+        }
     }
 }
