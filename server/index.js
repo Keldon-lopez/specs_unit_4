@@ -6,6 +6,7 @@ const {PORT} = process.env
 const {register, login, logout} = require('./controllers/auth.js')
 const {getAllPosts, getCurrentUserPosts, addPost, editPost, deletePost} = require('./controllers/posts.js')
 const {isAuthenticated} = require('./middleware/isAuthenticated.js')
+// const path = require('node:path'); 
 
 const {sequelize} = require('./util/database')
 const {User} = require('./models/user')
@@ -18,6 +19,16 @@ app.use(express.static(`${__dirname}/server`))
 
 app.use(express.json())
 app.use(cors())
+
+
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname, '../src/app.js'), function(err) {
+//       if (err) {
+//         res.status(500).send(err)
+//       }
+//     })
+//   })
+
 
 // Auth
 app.post('/register', register)
